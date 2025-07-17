@@ -2,10 +2,7 @@ EAPI=8
 inherit git-r3
 DESCRIPTION="A monospaced programming font inspired by the Minecraft typeface"
 HOMEPAGE="https://github.com/IdreesInc/Monocraft"
-#SRC_URI="https://github.com/IdreesInc/Monocraft"
-EGIT_REPO_URI="https://github.com/IdreesInc/Monocraft.git"
-
-#KEYWORDS="~*"
+KEYWORDS="~*"
 SLOT="0"
 IUSE=""
 PROPERTIES="live"
