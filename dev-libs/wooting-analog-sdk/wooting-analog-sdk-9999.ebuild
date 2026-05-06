@@ -14,10 +14,8 @@ KEYWORDS="~*"
 # Dependencies for building and running
 RDEPEND="virtual/libudev"
 DEPEND="${RDEPEND}"
-BDEPEND=""
+BDEPEND="dev-util/cbindgen"
 
-# The SDK is a workspace; we need to build the specific library
-QA_FLAGS_IGNORED="usr/lib.*/libwooting_analog_sdk.so"
 
 src_unpack() {
 	git-r3_src_unpack
@@ -25,21 +23,20 @@ src_unpack() {
 }
 
 src_compile() {
-	# Building the C-compatible shared library (cdylib)
-	# This usually targets the 'wrapper/sdk' crate or the main workspace
-	# if it's configured to output a .so
-	cargo_src_compile
+	cargo_src_compile -p wooting-analog-sdk --features ffi
+
+	ebegin "Generating C headers using cbindgen"
+	mkdir -p includes || die "Failed to create includes directory"
+	cbindgen --crate wooting-analog-sdk --output ./includes/wooting-analog-sdk.h || die "cbindgen failed"
+	eend $?
 }
 
 src_install() {
-	# Locate and install the compiled .so from the target directory
-	# Rust typically outputs to target/release/
 	dolib.so "target/release/libwooting_analog_sdk.so"
 
-	# Install headers if they exist (common for SDKs)
-	if [[ -d "wrapper/sdk/include" ]]; then
-		doheader wrapper/sdk/include/*.h
-	fi
+	# Install the dynamically generated C header
+	insinto /usr/include
+	doins includes/wooting-analog-sdk.h
 
 	einstalldocs
 }
