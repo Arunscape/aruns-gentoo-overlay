@@ -14,7 +14,7 @@ KEYWORDS="~*"
 # Dependencies for building and running
 RDEPEND="virtual/libudev"
 DEPEND="${RDEPEND}"
-BDEPEND=">=virtual/rust-1.70"
+BDEPEND=""
 
 # The SDK is a workspace; we need to build the specific library
 QA_FLAGS_IGNORED="usr/lib.*/libwooting_analog_sdk.so"
