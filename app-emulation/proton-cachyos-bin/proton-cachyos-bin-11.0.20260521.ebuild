@@ -22,7 +22,7 @@ SRC_URI="
 "
 
 LICENSE="GPL-2 GPL-3 LGPL-2.1 MIT ZLIB"
-SLOT="${PV}"
+SLOT="0"
 KEYWORDS="-* ~amd64"
 IUSE="cpu_flags_x86_v3"
 
