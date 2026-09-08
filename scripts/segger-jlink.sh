@@ -86,7 +86,7 @@ S="${WORKDIR}/${MY_PN}_V${MY_PV}_x86_64"
 
 DEPEND="
 	virtual/libusb:1
-	sys-fs/udev
+	virtual/udev
 "
 RDEPEND="${DEPEND}"
 
