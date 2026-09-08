@@ -106,8 +106,8 @@ src_install() {
 	cp -a . "${ED}${optdir}/" || die "Failed to copy J-Link files"
 
 	# Fix permissions
-	fperms -R 0755 "${optdir}"
-	fperms -R 0644 "${optdir}"/Doc "${optdir}"/Samples "${optdir}"/ETC
+	chmod -R 0755 "${ED}${optdir}"
+	chmod -R 0644 "${ED}${optdir}"/Doc "${ED}${optdir}"/Samples "${ED}${optdir}"/ETC
 
 	# Symlink binaries to /usr/bin
 	dodir /usr/bin
