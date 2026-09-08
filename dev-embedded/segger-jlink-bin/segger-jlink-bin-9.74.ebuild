@@ -11,13 +11,13 @@ MY_PV="${PV//./}"
 
 DESCRIPTION="SEGGER J-Link Software and Documentation Pack"
 HOMEPAGE="https://www.segger.com/downloads/jlink/"
-SRC_URI="amd64? ( https://www.segger.com/downloads/jlink/${MY_PN}_V${MY_PV}_x86_64.tgz )"
+SRC_URI="https://www.segger.com/downloads/jlink/${MY_PN}_V${MY_PV}_x86_64.tgz"
 
 LICENSE="SEGGER"
 SLOT="0"
 KEYWORDS="-* ~amd64"
 
-RESTRICT="mirror strip bindist"
+RESTRICT="mirror strip bindist fetch"
 QA_PREBUILT="*"
 
 S="${WORKDIR}/${MY_PN}_V${MY_PV}_x86_64"
@@ -31,9 +31,9 @@ RDEPEND="${DEPEND}"
 pkg_nofetch() {
 	einfo "Please download the J-Link software from:"
 	einfo "  ${HOMEPAGE}"
-	einfo "Place the downloaded file (${A}) into your DISTDIR directory."
-	einfo "Note: You can download it directly using curl:"
-	einfo "  curl -d \"accept_license_agreement=accepted\" -d \"submit=Download software\" -o ${DISTDIR}/${A} ${SRC_URI}"
+	einfo "Place the downloaded file (${A}) into your /var/cache/distfiles directory."
+	einfo "Note: You can download it directly using curl (as root):"
+	einfo "  sudo curl -d \"accept_license_agreement=accepted\" -d \"submit=Download software\" -o /var/cache/distfiles/${A} ${SRC_URI}"
 }
 
 src_install() {
