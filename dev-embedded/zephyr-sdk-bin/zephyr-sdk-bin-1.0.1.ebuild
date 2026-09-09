@@ -19,8 +19,8 @@ S="${WORKDIR}/zephyr-sdk-${PV}"
 DEPEND=""
 RDEPEND="${DEPEND}
 	sys-apps/dtc
-	dev-util/cmake
-	dev-util/ninja
+	dev-build/cmake
+	dev-build/ninja
 	dev-python/ply
 "
 
