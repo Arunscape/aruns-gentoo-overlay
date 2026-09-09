@@ -1,0 +1,42 @@
+name: Update Packages
+
+on:
+  schedule:
+    - cron: '20 4 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Update Scripts in Gentoo
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            gentoo/stage3:latest \
+            bash -c "
+              # Sync portage tree so ebuild manifest works
+              emerge-webrsync -q
+              
+              # Install git and jq (using binpkgs for speed)
+              emerge -qg dev-vcs/git app-misc/jq
+              
+              # Configure git for commits and push
+              git config --global user.name 'github-actions[bot]'
+              git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+              git config --global --add safe.directory /workspace
+              
+              # Run all update scripts
+              for script in scripts/*.sh; do
+                if [[ -x \"\$script\" ]] || [[ \"\$script\" == *.sh ]]; then
+                  echo \"Running \$script...\"
+                  bash \"\$script\"
+                fi
+              done
+            "
